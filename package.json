@@ -1,6 +1,8 @@
 {
   "name": "zoom-parallax",
   "version": "0.1.0",
+  "description": "A simple parallax animation with zoom effect",
+  "author": "Paweł Stach",
   "private": true,
   "scripts": {
     "dev": "next dev",
