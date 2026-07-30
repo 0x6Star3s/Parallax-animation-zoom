@@ -1,11 +1,15 @@
+// ponytail: cała kompozycja w %, bo .el ma dokładnie rozmiar sticky (100vw x 100svh)
+// -> te same liczby działają na każdym viewporcie, bez przeliczania vw/vh.
 .container{
     height: 300vh;
+    height: 300svh;
     position: relative;
     .sticky{
         position: sticky;
         overflow: hidden;
         top: 0;
         height: 100vh;
+        height: 100svh;
 
         .el{
             width: 100%;
@@ -15,59 +19,106 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            will-change: transform;
             .imageContainer{
                 position: relative;
-                width: 25vw;
-                height: 25vh;
+                width: 25%;
+                height: 25%;
                 img{
                     object-fit: cover;
                 }
             }
             &:nth-of-type(2){
                 .imageContainer{
-                    top: -30vh;
-                    left: 5vw;
-                    width: 35vw;
-                    height: 30vh;
+                    top: -30%;
+                    left: 5%;
+                    width: 35%;
+                    height: 30%;
                 }
             }
             &:nth-of-type(3){
                 .imageContainer{
-                    top: -10vh;
-                    left: -25vw;
-                    width: 20vw;
-                    height: 45vh;
+                    top: -10%;
+                    left: -25%;
+                    width: 20%;
+                    height: 45%;
                 }
             }
             &:nth-of-type(4){
                 .imageContainer{
-                    left: 27.5vw;
-                    width: 25vw;
-                    height: 25vh;
+                    left: 27.5%;
+                    width: 25%;
+                    height: 25%;
                 }
             }
             &:nth-of-type(5){
                 .imageContainer{
-                    top: 27.5vh;
-                    left: 5vw;
-                    width: 20vw;
-                    height: 25vh;
+                    top: 27.5%;
+                    left: 5%;
+                    width: 20%;
+                    height: 25%;
                 }
             }
             &:nth-of-type(6){
                 .imageContainer{
-                    top: 27.5vh;
-                    left: -22.5vw;
-                    width: 30vw;
-                    height: 25vh;
+                    top: 27.5%;
+                    left: -22.5%;
+                    width: 30%;
+                    height: 25%;
                 }
             }
             &:nth-of-type(7){
                 .imageContainer{
-                    top: 22.5vh;
-                    left: 25vw;
-                    width: 15vw;
-                    height: 15vh;
+                    top: 22.5%;
+                    left: 25%;
+                    width: 15%;
+                    height: 15%;
+                }
+            }
+
+            // Portret: szersze kadry i inne rozstawienie, żeby zdjęcia nie były
+            // pionowymi paskami. Wysokość głównego kadru zostaje 25% -> scale 4
+            // dalej wypełnia ekran dokładnie.
+            @media (max-aspect-ratio: 1 / 1){
+                .imageContainer{
+                    width: 44%;
+                    height: 25%;
+                }
+                &:nth-of-type(2) .imageContainer{
+                    top: -30%;
+                    left: 0;
+                    width: 46%;
+                    height: 22%;
+                }
+                &:nth-of-type(3) .imageContainer{
+                    top: -5%;
+                    left: -36%;
+                    width: 24%;
+                    height: 30%;
+                }
+                &:nth-of-type(4) .imageContainer{
+                    top: -5%;
+                    left: 36%;
+                    width: 24%;
+                    height: 24%;
+                }
+                &:nth-of-type(5) .imageContainer{
+                    top: 26%;
+                    left: -32%;
+                    width: 30%;
+                    height: 18%;
+                }
+                &:nth-of-type(6) .imageContainer{
+                    top: 26%;
+                    left: 32%;
+                    width: 28%;
+                    height: 18%;
+                }
+                &:nth-of-type(7) .imageContainer{
+                    top: 26%;
+                    left: 0;
+                    width: 26%;
+                    height: 14%;
                 }
             }
         }

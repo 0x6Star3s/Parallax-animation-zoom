@@ -7,22 +7,30 @@ import Picture5 from "../../../public/images/12.jpg";
 import Picture6 from "../../../public/images/2.jpeg";
 import Picture7 from "../../../public/images/6.jpg";
 import Image from "next/image";
-import { useScroll, useTransform, motion } from "framer-motion";
+import {
+  useScroll,
+  useTransform,
+  useReducedMotion,
+  motion,
+} from "framer-motion";
 import { useRef } from "react";
 
 export default function Index() {
-  const container = useRef(null);
+  const container = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start start", "end end"],
   });
 
-  const scale3 = useTransform(scrollYProgress, [0, 1], [1, 4]);
-  const scale4 = useTransform(scrollYProgress, [0, 1], [1, 4]);
-  const scale5 = useTransform(scrollYProgress, [0, 1], [1, 5]);
-  const scale6 = useTransform(scrollYProgress, [0, 1], [1, 6]);
-  const scale8 = useTransform(scrollYProgress, [0, 1], [1, 8]);
-  const scale9 = useTransform(scrollYProgress, [0, 1], [1, 10]);
+  // reduce -> brak zoomu, kompozycja zostaje statyczna
+  const to = (v: number) => (reduce ? 1 : v);
+  const scale3 = useTransform(scrollYProgress, [0, 1], [1, to(4)]);
+  const scale4 = useTransform(scrollYProgress, [0, 1], [1, to(4)]);
+  const scale5 = useTransform(scrollYProgress, [0, 1], [1, to(5)]);
+  const scale6 = useTransform(scrollYProgress, [0, 1], [1, to(6)]);
+  const scale8 = useTransform(scrollYProgress, [0, 1], [1, to(8)]);
+  const scale9 = useTransform(scrollYProgress, [0, 1], [1, to(10)]);
 
   const pictures = [
     {
@@ -62,7 +70,14 @@ export default function Index() {
           return (
             <motion.div key={index} style={{ scale }} className={styles.el}>
               <div className={styles.imageContainer}>
-                <Image src={src} fill alt="image" placeholder="blur" />
+                <Image
+                  src={src}
+                  fill
+                  alt=""
+                  placeholder="blur"
+                  priority={index === 0}
+                  sizes="(max-width: 768px) 100vw, 60vw"
+                />
               </div>
             </motion.div>
           );
